@@ -1,0 +1,39 @@
+{extend name="layout/default" /}
+
+{block name="content"}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h2 class="page-header">可报名的考试</h2>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>{:__('科目名称')}</th>
+                                    <th>{:__('所属年份')}</th>
+                                    <th>{:__('考试时间')}</th>
+                                    <th>{:__('考试地点')}</th>
+                                    <th>{:__('操作')}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {foreach $examList as $exam}
+                                <tr>
+                                    <td>{$exam.name}</td>
+                                    <td>{$exam.year}</td>
+                                    <td>{$exam.exam_time|datetime}</td>
+                                    <td>{$exam.exam_location}</td>
+                                    <td>
+                                        <a href="{:url('exam/detail', ['id' => $exam.id])}" class="btn btn-primary btn-xs">{:__('查看详情')}</a>
+                                    </td>
+                                </tr>
+                                {/foreach}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{/block}

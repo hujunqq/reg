@@ -36,19 +36,30 @@
                     </div>
                 </div>
 
-                <!--@CaptchaBegin-->
-                {if $captchaType}
                 <div class="form-group">
                     <label class="control-label">{:__('Captcha')}</label>
                     <div class="controls">
                         <div class="input-group">
-                            {include file="common/captcha" event="register" type="$captchaType" /}
+                            <input type="text" name="captcha" class="form-control" data-rule="required;length(4)" placeholder="{:__('Captcha')}"/>
+                            <span class="input-group-addon" style="padding:0;border:none;">
+                                <img src="{:captcha_src()}" width="100" height="30" onclick="this.src = '{:captcha_src()}?r=' + Math.random();"/>
+                            </span>
                         </div>
                         <p class="help-block"></p>
                     </div>
                 </div>
-                {/if}
-                <!--@CaptchaEnd-->
+                <div class="form-group">
+                    <label class="control-label">{:__('SMS Captcha')}</label>
+                    <div class="controls">
+                        <div class="input-group">
+                            <input type="text" name="smscaptcha" class="form-control" data-rule="required;length(6)" placeholder="{:__('SMS Captcha')}"/>
+                            <span class="input-group-btn" style="padding:0;border:none;">
+                                <a href="javascript:;" class="btn btn-primary btn-sms-captcha" data-url="{:url('api/sms/send')}" data-event="register">{:__('Send SMS Captcha')}</a>
+                            </span>
+                        </div>
+                        <p class="help-block"></p>
+                    </div>
+                </div>
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-lg btn-block">{:__('Sign up')}</button>

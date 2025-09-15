@@ -6,6 +6,7 @@ use app\common\controller\Api;
 use app\common\library\Sms as Smslib;
 use app\common\model\User;
 use think\Hook;
+use think\Validate;
 
 /**
  * 手机短信接口
@@ -21,14 +22,20 @@ class Sms extends Api
      * @ApiMethod (POST)
      * @ApiParams (name="mobile", type="string", required=true, description="手机号")
      * @ApiParams (name="event", type="string", required=true, description="事件名称")
+     * @ApiParams (name="captcha", type="string", required=true, description="图形验证码")
      */
     public function send()
     {
         $mobile = $this->request->post("mobile");
         $event = $this->request->post("event");
         $event = $event ? $event : 'register';
+        $captcha = $this->request->post("captcha");
 
-        if (!$mobile || !\think\Validate::regex($mobile, "^1\d{10}$")) {
+        if (!$captcha || !Validate::is($captcha, 'alphaNum') || !captcha_check($captcha, '', false)) {
+            $this->error(__('图形验证码不正确'));
+        }
+
+        if (!$mobile || !Validate::regex($mobile, "^1\d{10}$")) {
             $this->error(__('手机号不正确'));
         }
         $last = Smslib::get($mobile, $event);

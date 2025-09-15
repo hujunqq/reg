@@ -1,0 +1,40 @@
+{extend name="layout/default" /}
+
+{block name="content"}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h2 class="page-header">{$exam.name}</h2>
+                        <p><strong>{:__('所属年份')}:</strong> {$exam.year}</p>
+                        <p><strong>{:__('考试时间')}:</strong> {$exam.exam_time|datetime}</p>
+                        <p><strong>{:__('考试地点')}:</strong> {$exam.exam_location}</p>
+
+                        <h3 class="page-header">{:__('可报名的级别')}</h3>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>{:__('级别名称')}</th>
+                                    <th>{:__('准考证编码')}</th>
+                                    <th>{:__('操作')}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {foreach $examLevelList as $level}
+                                <tr>
+                                    <td>{$level.level_name}</td>
+                                    <td>{$level.ticket_code}</td>
+                                    <td>
+                                        <a href="{:url('exam/apply', ['level_id' => $level.id])}" class="btn btn-success btn-xs">{:__('报名')}</a>
+                                    </td>
+                                </tr>
+                                {/foreach}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{/block}

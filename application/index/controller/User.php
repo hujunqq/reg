@@ -57,6 +57,10 @@ class User extends Frontend
     public function index()
     {
         $this->view->assign('title', __('User center'));
+        $applicationList = \app\common\model\ExamApplication::where('user_id', $this->auth->id)
+            ->with(['exam', 'examlevel'])
+            ->select();
+        $this->view->assign('applicationList', $applicationList);
         return $this->view->fetch();
     }
 
@@ -74,47 +78,39 @@ class User extends Frontend
             $password = $this->request->post('password', '', null);
             $email = $this->request->post('email');
             $mobile = $this->request->post('mobile', '');
-            $captcha = $this->request->post('captcha');
+            $smscaptcha = $this->request->post('smscaptcha');
             $token = $this->request->post('__token__');
             $rule = [
-                'username'  => 'require|length:3,30',
-                'password'  => 'require|length:6,30',
-                'email'     => 'require|email',
-                'mobile'    => 'regex:/^1\d{10}$/',
-                '__token__' => 'require|token',
+                'username'   => 'require|length:3,30',
+                'password'   => 'require|length:6,30',
+                'email'      => 'require|email',
+                'mobile'     => 'regex:/^1\d{10}$/',
+                'smscaptcha' => 'require|length:6',
+                '__token__'  => 'require|token',
             ];
 
             $msg = [
-                'username.require' => 'Username can not be empty',
-                'username.length'  => 'Username must be 3 to 30 characters',
-                'password.require' => 'Password can not be empty',
-                'password.length'  => 'Password must be 6 to 30 characters',
-                'email'            => 'Email is incorrect',
-                'mobile'           => 'Mobile is incorrect',
+                'username.require'   => 'Username can not be empty',
+                'username.length'    => 'Username must be 3 to 30 characters',
+                'password.require'   => 'Password can not be empty',
+                'password.length'    => 'Password must be 6 to 30 characters',
+                'email'              => 'Email is incorrect',
+                'mobile'             => 'Mobile is incorrect',
+                'smscaptcha.require' => 'SMS Captcha can not be empty',
+                'smscaptcha.length'  => 'SMS Captcha must be 6 characters',
             ];
             $data = [
-                'username'  => $username,
-                'password'  => $password,
-                'email'     => $email,
-                'mobile'    => $mobile,
-                '__token__' => $token,
+                'username'   => $username,
+                'password'   => $password,
+                'email'      => $email,
+                'mobile'     => $mobile,
+                'smscaptcha' => $smscaptcha,
+                '__token__'  => $token,
             ];
-            //验证码
-            $captchaResult = true;
-            $captchaType = config("fastadmin.user_register_captcha");
-            if ($captchaType) {
-                if ($captchaType == 'mobile') {
-                    $captchaResult = Sms::check($mobile, $captcha, 'register');
-                } elseif ($captchaType == 'email') {
-                    $captchaResult = Ems::check($email, $captcha, 'register');
-                } elseif ($captchaType == 'wechat') {
-                    $captchaResult = WechatCaptcha::check($captcha, 'register');
-                } elseif ($captchaType == 'text') {
-                    $captchaResult = \think\Validate::is($captcha, 'captcha');
-                }
-            }
+
+            $captchaResult = Sms::check($mobile, $smscaptcha, 'register');
             if (!$captchaResult) {
-                $this->error(__('Captcha is incorrect'));
+                $this->error(__('SMS Captcha is incorrect'));
             }
             $validate = new Validate($rule, $msg);
             $result = $validate->check($data);
@@ -329,5 +325,66 @@ class User extends Frontend
         $this->view->assign('mimetype', $mimetype);
         $this->view->assign("mimetypeList", \app\common\model\Attachment::getMimetypeList());
         return $this->view->fetch();
+    }
+
+    /**
+     * 重置密码
+     */
+    public function resetpwd()
+    {
+        if ($this->request->isPost()) {
+            $type = $this->request->post("type");
+            $mobile = $this->request->post("mobile");
+            $email = $this->request->post("email");
+            $newpassword = $this->request->post("newpassword");
+            $captcha = $this->request->post("captcha");
+            if (!$newpassword) {
+                $this->error(__('Invalid parameters'));
+            }
+            if ($type == 'mobile') {
+                $user = \app\common\model\User::getByMobile($mobile);
+                if (!$user) {
+                    $this->error(__('User not found'));
+                }
+                $ret = Sms::check($mobile, $captcha, 'resetpwd');
+                if (!$ret) {
+                    $this->error(__('Captcha is incorrect'));
+                }
+                Sms::flush($mobile, 'resetpwd');
+            } else {
+                $user = \app\common\model\User::getByEmail($email);
+                if (!$user) {
+                    $this->error(__('User not found'));
+                }
+                $ret = Ems::check($email, $captcha, 'resetpwd');
+                if (!$ret) {
+                    $this->error(__('Captcha is incorrect'));
+                }
+                Ems::flush($email, 'resetpwd');
+            }
+            //重置密码
+            $this->auth->direct($user->id);
+            $ret = $this->auth->changepwd($newpassword, '', true);
+            if ($ret) {
+                $this->success(__('Reset password successful'), url('user/login'));
+            } else {
+                $this->error($this->auth->getError());
+            }
+        }
+        $this->view->assign('title', __('Reset password'));
+        return $this->view->fetch();
+    }
+
+    public function getApplicationDetail($id = null)
+    {
+        $this->request->isAjax() or $this->error('非法请求');
+        $application = \app\common\model\ExamApplication::where('id', $id)
+            ->where('user_id', $this->auth->id)
+            ->with(['user', 'exam', 'examlevel'])
+            ->find();
+        if (!$application) {
+            $this->error(__('No results were found'));
+        }
+        $this->success('', null, $application);
     }
 }

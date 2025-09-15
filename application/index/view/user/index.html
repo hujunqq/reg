@@ -64,6 +64,93 @@
                     </div>
                 </div>
             </div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h2 class="page-header">{:__('我的报名')}</h2>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>{:__('考试名称')}</th>
+                                <th>{:__('级别名称')}</th>
+                                <th>{:__('审核状态')}</th>
+                                <th>{:__('分数')}</th>
+                                <th>{:__('录取状态')}</th>
+                                <th>{:__('操作')}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {foreach $applicationList as $application}
+                            <tr>
+                                <td>{$application.exam.name}</td>
+                                <td>{$application.examlevel.level_name}</td>
+                                <td>{$application.status}</td>
+                                <td>{$application.score}</td>
+                                <td>{$application.admission_status}</td>
+                                <td>
+                                    {if $application.exam.allow_download_ticket && $application.status == 'approved'}
+                                    <a href="javascript:;" class="btn btn-primary btn-xs btn-download-ticket" data-id="{$application.id}">{:__('下载准考证')}</a>
+                                    {/if}
+                                    {if $application.exam.allow_download_certificate && $application.admission_status == 'passed'}
+                                    <a href="javascript:;" class="btn btn-success btn-xs btn-download-certificate" data-id="{$application.id}">{:__('下载合格证')}</a>
+                                    {/if}
+                                </td>
+                            </tr>
+                            {/foreach}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+{block name="js"}
+<script>
+    require(['jspdf', 'toastr'], function (jspdf, Toastr) {
+        $(document).on('click', '.btn-download-ticket', function () {
+            var id = $(this).data('id');
+            $.ajax({
+                url: "{:url('user/getApplicationDetail')}",
+                data: {id: id},
+                dataType: 'json',
+                success: function (res) {
+                    if (res.code === 1) {
+                        var doc = new jspdf.jsPDF();
+                        doc.text("准考证", 10, 10);
+                        doc.text("姓名: " + res.data.user.nickname, 10, 20);
+                        doc.text("考试名称: " + res.data.exam.name, 10, 30);
+                        doc.text("考试级别: " + res.data.examlevel.level_name, 10, 40);
+                        doc.text("考试时间: " + res.data.exam.exam_time, 10, 50);
+                        doc.text("考试地点: " + res.data.exam.exam_location, 10, 60);
+                        doc.text("准考证编码: " + res.data.examlevel.ticket_code, 10, 70);
+                        doc.save("准考证.pdf");
+                    } else {
+                        Toastr.error(res.msg);
+                    }
+                }
+            });
+        });
+
+        $(document).on('click', '.btn-download-certificate', function () {
+            var id = $(this).data('id');
+            $.ajax({
+                url: "{:url('user/getApplicationDetail')}",
+                data: {id: id},
+                dataType: 'json',
+                success: function (res) {
+                    if (res.code === 1) {
+                        var doc = new jspdf.jsPDF();
+                        doc.text("合格证", 10, 10);
+                        doc.text("姓名: " + res.data.user.nickname, 10, 20);
+                        doc.text("考试名称: " + res.data.exam.name, 10, 30);
+                        doc.text("考试级别: " + res.data.examlevel.level_name, 10, 40);
+                        doc.text("分数: " + res.data.score, 10, 50);
+                        doc.save("合格证.pdf");
+                    } else {
+                        Toastr.error(res.msg);
+                    }
+                }
+            });
+        });
+    });
+</script>
+{/block}

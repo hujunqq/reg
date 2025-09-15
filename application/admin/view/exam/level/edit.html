@@ -1,0 +1,34 @@
+<form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Exam_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-exam_id" data-rule="required" data-source="exam/exam/index" class="form-control selectpage" name="row[exam_id]" type="text" value="{$row.exam_id|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Level_name')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            {:build_select('row[level_name]', ['研究馆员'=>'研究馆员', '副研究馆员'=>'副研究馆员', '馆员'=>'馆员', '助理馆员'=>'助理馆员', '管理员'=>'管理员'], $row.level_name, ['class'=>'form-control selectpicker'])}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Passing_score')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-passing_score" data-rule="required" class="form-control" name="row[passing_score]" type="number" value="{$row.passing_score|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Ticket_code')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-ticket_code" data-rule="required" class="form-control" name="row[ticket_code]" type="text" value="{$row.ticket_code|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

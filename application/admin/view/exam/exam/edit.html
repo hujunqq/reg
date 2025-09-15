@@ -1,0 +1,70 @@
+<form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Name')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-name" data-rule="required" class="form-control" name="row[name]" type="text" value="{$row.name|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Start_time')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-start_time" data-rule="required" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[start_time]" type="text" value="{$row.start_time|datetime}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('End_time')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-end_time" data-rule="required" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[end_time]" type="text" value="{$row.end_time|datetime}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Year')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-year" data-rule="required" class="form-control" name="row[year]" type="text" value="{$row.year|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Exam_time')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-exam_time" data-rule="required" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[exam_time]" type="text" value="{$row.exam_time|datetime}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Exam_location')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-exam_location" data-rule="required" class="form-control" name="row[exam_location]" type="text" value="{$row.exam_location|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Allow_reapply_on_fail')}:</label>
+        <div class="col-xs-12 col-sm-8">
+
+            <input  id="c-allow_reapply_on_fail" name="row[allow_reapply_on_fail]" type="hidden" value="{$row.allow_reapply_on_fail}">
+            <input  id="c-allow_reapply_on_fail-switch" class="form-control" name="row[allow_reapply_on_fail]" type="checkbox" value="1" {if $row.allow_reapply_on_fail}checked{/if} data-on-text="Yes" data-off-text="No">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Allow_download_ticket')}:</label>
+        <div class="col-xs-12 col-sm-8">
+
+            <input  id="c-allow_download_ticket" name="row[allow_download_ticket]" type="hidden" value="{$row.allow_download_ticket}">
+            <input  id="c-allow_download_ticket-switch" class="form-control" name="row[allow_download_ticket]" type="checkbox" value="1" {if $row.allow_download_ticket}checked{/if} data-on-text="Yes" data-off-text="No">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Allow_download_certificate')}:</label>
+        <div class="col-xs-12 col-sm-8">
+
+            <input  id="c-allow_download_certificate" name="row[allow_download_certificate]" type="hidden" value="{$row.allow_download_certificate}">
+            <input  id="c-allow_download_certificate-switch" class="form-control" name="row[allow_download_certificate]" type="checkbox" value="1" {if $row.allow_download_certificate}checked{/if} data-on-text="Yes" data-off-text="No">
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

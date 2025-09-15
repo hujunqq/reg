@@ -76,6 +76,148 @@
         </div>
     </div>
     <div class="form-group">
+        <label for="c-id_card_number" class="control-label col-xs-12 col-sm-2">{:__('身份证号')}:</label>
+        <div class="col-xs-12 col-sm-4">
+            <input id="c-id_card_number" data-rule="required" class="form-control" name="row[id_card_number]" type="text" value="{$row.id_card_number|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-id_card_front_image" class="control-label col-xs-12 col-sm-2">{:__('身份证正面照')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="input-group">
+                <input id="c-id_card_front_image" data-rule="required" class="form-control" size="50" name="row[id_card_front_image]" type="text" value="{$row.id_card_front_image|htmlentities}">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="faupload-id_card_front_image" class="btn btn-danger faupload" data-input-id="c-id_card_front_image" data-mimetype="image/*" data-multiple="false" data-preview-id="p-id_card_front_image"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                    <span><button type="button" id="fachoose-id_card_front_image" class="btn btn-primary fachoose" data-input-id="c-id_card_front_image" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
+                </div>
+                <span class="msg-box n-right" for="c-id_card_front_image"></span>
+            </div>
+            <ul class="row list-inline faupload-preview" id="p-id_card_front_image"></ul>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-id_card_back_image" class="control-label col-xs-12 col-sm-2">{:__('身份证反面照')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="input-group">
+                <input id="c-id_card_back_image" data-rule="required" class="form-control" size="50" name="row[id_card_back_image]" type="text" value="{$row.id_card_back_image|htmlentities}">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="faupload-id_card_back_image" class="btn btn-danger faupload" data-input-id="c-id_card_back_image" data-mimetype="image/*" data-multiple="false" data-preview-id="p-id_card_back_image"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                    <span><button type="button" id="fachoose-id_card_back_image" class="btn btn-primary fachoose" data-input-id="c-id_card_back_image" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
+                </div>
+                <span class="msg-box n-right" for="c-id_card_back_image"></span>
+            </div>
+            <ul class="row list-inline faupload-preview" id="p-id_card_back_image"></ul>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-degree_certificate_full_time" class="control-label col-xs-12 col-sm-2">{:__('全日制学历或学位图')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="input-group">
+                <input id="c-degree_certificate_full_time" class="form-control" size="50" name="row[degree_certificate_full_time]" type="text" value="{$row.degree_certificate_full_time|htmlentities}">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="faupload-degree_certificate_full_time" class="btn btn-danger faupload" data-input-id="c-degree_certificate_full_time" data-mimetype="image/*" data-multiple="false" data-preview-id="p-degree_certificate_full_time"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                    <span><button type="button" id="fachoose-degree_certificate_full_time" class="btn btn-primary fachoose" data-input-id="c-degree_certificate_full_time" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
+                </div>
+                <span class="msg-box n-right" for="c-degree_certificate_full_time"></span>
+            </div>
+            <ul class="row list-inline faupload-preview" id="p-degree_certificate_full_time"></ul>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-degree_certificate_part_time" class="control-label col-xs-12 col-sm-2">{:__('在职学历或学位图')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="input-group">
+                <input id="c-degree_certificate_part_time" class="form-control" size="50" name="row[degree_certificate_part_time]" type="text" value="{$row.degree_certificate_part_time|htmlentities}">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="faupload-degree_certificate_part_time" class="btn btn-danger faupload" data-input-id="c-degree_certificate_part_time" data-mimetype="image/*" data-multiple="false" data-preview-id="p-degree_certificate_part_time"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                    <span><button type="button" id="fachoose-degree_certificate_part_time" class="btn btn-primary fachoose" data-input-id="c-degree_certificate_part_time" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
+                </div>
+                <span class="msg-box n-right" for="c-degree_certificate_part_time"></span>
+            </div>
+            <ul class="row list-inline faupload-preview" id="p-degree_certificate_part_time"></ul>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-application_form" class="control-label col-xs-12 col-sm-2">{:__('水测报名表')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="input-group">
+                <input id="c-application_form" class="form-control" size="50" name="row[application_form]" type="text" value="{$row.application_form|htmlentities}">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="faupload-application_form" class="btn btn-danger faupload" data-input-id="c-application_form" data-mimetype="*" data-multiple="false" data-preview-id="p-application_form"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                    <span><button type="button" id="fachoose-application_form" class="btn btn-primary fachoose" data-input-id="c-application_form" data-mimetype="*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
+                </div>
+                <span class="msg-box n-right" for="c-application_form"></span>
+            </div>
+            <ul class="row list-inline faupload-preview" id="p-application_form"></ul>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-education_full_time_details" class="control-label col-xs-12 col-sm-2">{:__('全日制教育毕业院校系及专业')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-education_full_time_details" class="form-control" name="row[education_full_time_details]" type="text" value="{$row.education_full_time_details|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-education_part_time_details" class="control-label col-xs-12 col-sm-2">{:__('在职教育毕业院校系及专业')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-education_part_time_details" class="form-control" name="row[education_part_time_details]" type="text" value="{$row.education_part_time_details|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-current_occupation" class="control-label col-xs-12 col-sm-2">{:__('现从事工作')}:</label>
+        <div class="col-xs-12 col-sm-4">
+            <input id="c-current_occupation" data-rule="required" class="form-control" name="row[current_occupation]" type="text" value="{$row.current_occupation|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-supervisor_unit" class="control-label col-xs-12 col-sm-2">{:__('主管单位')}:</label>
+        <div class="col-xs-12 col-sm-4">
+            <input id="c-supervisor_unit" class="form-control" name="row[supervisor_unit]" type="text" value="{$row.supervisor_unit|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-company_name" class="control-label col-xs-12 col-sm-2">{:__('单位名称')}:</label>
+        <div class="col-xs-12 col-sm-4">
+            <input id="c-company_name" data-rule="required" class="form-control" name="row[company_name]" type="text" value="{$row.company_name|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-administrative_duties" class="control-label col-xs-12 col-sm-2">{:__('行政职务')}:</label>
+        <div class="col-xs-12 col-sm-4">
+            <input id="c-administrative_duties" class="form-control" name="row[administrative_duties]" type="text" value="{$row.administrative_duties|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-work_experience_years" class="control-label col-xs-12 col-sm-2">{:__('工作年限')}:</label>
+        <div class="col-xs-12 col-sm-4">
+            <input id="c-work_experience_years" data-rule="required" class="form-control" name="row[work_experience_years]" type="number" value="{$row.work_experience_years|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-company_zip_code" class="control-label col-xs-12 col-sm-2">{:__('单位邮编')}:</label>
+        <div class="col-xs-12 col-sm-4">
+            <input id="c-company_zip_code" class="form-control" name="row[company_zip_code]" type="text" value="{$row.company_zip_code|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-company_phone" class="control-label col-xs-12 col-sm-2">{:__('单位电话')}:</label>
+        <div class="col-xs-12 col-sm-4">
+            <input id="c-company_phone" class="form-control" name="row[company_phone]" type="text" value="{$row.company_phone|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-company_address" class="control-label col-xs-12 col-sm-2">{:__('单位地址')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-company_address" class="form-control" name="row[company_address]" type="text" value="{$row.company_address|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-remarks" class="control-label col-xs-12 col-sm-2">{:__('备注信息')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea id="c-remarks" class="form-control" rows="5" name="row[remarks]" cols="50">{$row.remarks|htmlentities}</textarea>
+        </div>
+    </div>
+    <div class="form-group">
         <label for="c-money" class="control-label col-xs-12 col-sm-2">{:__('Money')}:</label>
         <div class="col-xs-12 col-sm-4">
             <input id="c-money" data-rule="required" class="form-control" name="row[money]" type="number" value="{$row.money|htmlentities}">
