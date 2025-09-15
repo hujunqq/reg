@@ -80,7 +80,7 @@
                                 <div class="input-group">
                                     <input id="c-id_card_front_image" data-rule="required" class="form-control" size="50" name="id_card_front_image" type="text" value="{$user.id_card_front_image|htmlentities}">
                                     <div class="input-group-addon no-border no-padding">
-                                        <span><button type="button" id="faupload-id_card_front_image" class="btn btn-danger faupload" data-input-id="c-id_card_front_image" data-mimetype="image/*" data-multiple="false" data-preview-id="p-id_card_front_image"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                                        <span><button type="button" id="faupload-id_card_front_image" class="btn btn-danger faupload" data-input-id="c-id_card_front_image" data-mimetype="image/jpeg,image/png,image/gif" data-max-size="5242880" data-multiple="false" data-preview-id="p-id_card_front_image"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
                                         <span><button type="button" id="fachoose-id_card_front_image" class="btn btn-primary fachoose" data-input-id="c-id_card_front_image" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
                                     </div>
                                     <span class="msg-box n-right" for="c-id_card_front_image"></span>
@@ -94,7 +94,7 @@
                                 <div class="input-group">
                                     <input id="c-id_card_back_image" data-rule="required" class="form-control" size="50" name="id_card_back_image" type="text" value="{$user.id_card_back_image|htmlentities}">
                                     <div class="input-group-addon no-border no-padding">
-                                        <span><button type="button" id="faupload-id_card_back_image" class="btn btn-danger faupload" data-input-id="c-id_card_back_image" data-mimetype="image/*" data-multiple="false" data-preview-id="p-id_card_back_image"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                                        <span><button type="button" id="faupload-id_card_back_image" class="btn btn-danger faupload" data-input-id="c-id_card_back_image" data-mimetype="image/jpeg,image/png,image/gif" data-max-size="5242880" data-multiple="false" data-preview-id="p-id_card_back_image"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
                                         <span><button type="button" id="fachoose-id_card_back_image" class="btn btn-primary fachoose" data-input-id="c-id_card_back_image" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
                                     </div>
                                     <span class="msg-box n-right" for="c-id_card_back_image"></span>
@@ -108,7 +108,7 @@
                                 <div class="input-group">
                                     <input id="c-degree_certificate_full_time" class="form-control" size="50" name="degree_certificate_full_time" type="text" value="{$user.degree_certificate_full_time|htmlentities}">
                                     <div class="input-group-addon no-border no-padding">
-                                        <span><button type="button" id="faupload-degree_certificate_full_time" class="btn btn-danger faupload" data-input-id="c-degree_certificate_full_time" data-mimetype="image/*" data-multiple="false" data-preview-id="p-degree_certificate_full_time"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                                        <span><button type="button" id="faupload-degree_certificate_full_time" class="btn btn-danger faupload" data-input-id="c-degree_certificate_full_time" data-mimetype="image/jpeg,image/png,image/gif" data-max-size="5242880" data-multiple="false" data-preview-id="p-degree_certificate_full_time"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
                                         <span><button type="button" id="fachoose-degree_certificate_full_time" class="btn btn-primary fachoose" data-input-id="c-degree_certificate_full_time" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
                                     </div>
                                     <span class="msg-box n-right" for="c-degree_certificate_full_time"></span>
@@ -122,7 +122,7 @@
                                 <div class="input-group">
                                     <input id="c-degree_certificate_part_time" class="form-control" size="50" name="degree_certificate_part_time" type="text" value="{$user.degree_certificate_part_time|htmlentities}">
                                     <div class="input-group-addon no-border no-padding">
-                                        <span><button type="button" id="faupload-degree_certificate_part_time" class="btn btn-danger faupload" data-input-id="c-degree_certificate_part_time" data-mimetype="image/*" data-multiple="false" data-preview-id="p-degree_certificate_part_time"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                                        <span><button type="button" id="faupload-degree_certificate_part_time" class="btn btn-danger faupload" data-input-id="c-degree_certificate_part_time" data-mimetype="image/jpeg,image/png,image/gif" data-max-size="5242880" data-multiple="false" data-preview-id="p-degree_certificate_part_time"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
                                         <span><button type="button" id="fachoose-degree_certificate_part_time" class="btn btn-primary fachoose" data-input-id="c-degree_certificate_part_time" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
                                     </div>
                                     <span class="msg-box n-right" for="c-degree_certificate_part_time"></span>
@@ -136,7 +136,7 @@
                                 <div class="input-group">
                                     <input id="c-application_form" class="form-control" size="50" name="application_form" type="text" value="{$user.application_form|htmlentities}">
                                     <div class="input-group-addon no-border no-padding">
-                                        <span><button type="button" id="faupload-application_form" class="btn btn-danger faupload" data-input-id="c-application_form" data-mimetype="*" data-multiple="false" data-preview-id="p-application_form"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                                        <span><button type="button" id="faupload-application_form" class="btn btn-danger faupload" data-input-id="c-application_form" data-mimetype="pdf,doc,docx" data-max-size="5242880" data-multiple="false" data-preview-id="p-application_form"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
                                         <span><button type="button" id="fachoose-application_form" class="btn btn-primary fachoose" data-input-id="c-application_form" data-mimetype="*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
                                     </div>
                                     <span class="msg-box n-right" for="c-application_form"></span>

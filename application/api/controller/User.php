@@ -161,27 +161,21 @@ class User extends Api
     public function profile()
     {
         $user = $this->auth->getUser();
-        $username = $this->request->post('username');
-        $nickname = $this->request->post('nickname');
-        $bio = $this->request->post('bio');
-        $avatar = $this->request->post('avatar', '', 'trim,strip_tags,htmlspecialchars');
-        if ($username) {
-            $exists = \app\common\model\User::where('username', $username)->where('id', '<>', $this->auth->id)->find();
+        $params = $this->request->post();
+        if(isset($params['username'])){
+            $exists = \app\common\model\User::where('username', $params['username'])->where('id', '<>', $this->auth->id)->find();
             if ($exists) {
                 $this->error(__('Username already exists'));
             }
-            $user->username = $username;
         }
-        if ($nickname) {
-            $exists = \app\common\model\User::where('nickname', $nickname)->where('id', '<>', $this->auth->id)->find();
+        if(isset($params['nickname'])){
+            $exists = \app\common\model\User::where('nickname', $params['nickname'])->where('id', '<>', $this->auth->id)->find();
             if ($exists) {
                 $this->error(__('Nickname already exists'));
             }
-            $user->nickname = $nickname;
         }
-        $user->bio = $bio;
-        $user->avatar = $avatar;
-        $user->save();
+
+        $user->save($params);
         $this->success();
     }
 

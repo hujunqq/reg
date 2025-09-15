@@ -37,18 +37,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label">{:__('Captcha')}</label>
-                    <div class="controls">
-                        <div class="input-group">
-                            <input type="text" name="captcha" class="form-control" data-rule="required;length(4)" placeholder="{:__('Captcha')}"/>
-                            <span class="input-group-addon" style="padding:0;border:none;">
-                                <img src="{:captcha_src()}" width="100" height="30" onclick="this.src = '{:captcha_src()}?r=' + Math.random();"/>
-                            </span>
-                        </div>
-                        <p class="help-block"></p>
-                    </div>
-                </div>
-                <div class="form-group">
                     <label class="control-label">{:__('SMS Captcha')}</label>
                     <div class="controls">
                         <div class="input-group">
@@ -70,3 +58,76 @@
         </div>
     </div>
 </div>
+{block name="js"}
+<script type="text/html" id="graphicalcaptchatpl">
+    <form id="graphicalcaptcha-form" class="form-horizontal form-layer" method="POST" action="">
+        <div class="form-body">
+            <input type="hidden" name="action" value="checkgraphicalcaptcha" />
+            <div class="form-group">
+                <label for="c-captcha" class="control-label col-xs-12 col-sm-3">{:__('Captcha')}:</label>
+                <div class="col-xs-12 col-sm-8">
+                    <div class="input-group">
+                        <input type="text" name="captcha" id="captcha-input" class="form-control" data-rule="required;length(4)" />
+                        <span class="input-group-addon" style="padding:0;border:none;">
+                            <img src="{:captcha_src()}" width="100" height="30" onclick="this.src = '{:captcha_src()}?r=' + Math.random();"/>
+                        </span>
+                    </div>
+                    <span class="msg-box"></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-footer">
+            <div class="form-group" style="margin-bottom:0;">
+                <div class="col-xs-12 col-sm-8 col-sm-offset-3">
+                    <button type="submit" class="btn btn-md btn-primary">{:__('Submit')}</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</script>
+<script>
+    require(['jquery', 'bootstrap', 'fast', 'form', 'layer', 'toastr', 'template'], function ($, undefined, Fast, Form, Layer, Toastr, Template) {
+        $(function () {
+            $(document).on('click', '.btn-sms-captcha', function () {
+                var mobile = $('#mobile').val();
+                if (!mobile) {
+                    Toastr.error(__('Please enter mobile number'));
+                    return;
+                }
+                Layer.open({
+                    type: 1,
+                    title: __('Please enter the graphical captcha'),
+                    area: ['400px', '250px'],
+                    content: Template('graphicalcaptchatpl', {}),
+                    success: function (layero, index) {
+                        var form = layero.find('form');
+                        Form.api.bindevent(form, function (data, ret) {
+                            // This is the success callback of the form submission
+                            Layer.close(index);
+                            // Now send the SMS
+                            var captcha = layero.find('#captcha-input').val();
+                            $.ajax({
+                                url: "{:url('api/sms/send')}",
+                                data: {
+                                    mobile: mobile,
+                                    event: 'register',
+                                    captcha: captcha
+                                },
+                                dataType: 'json',
+                                success: function (res) {
+                                    if (res.code === 1) {
+                                        Toastr.success(res.msg);
+                                    } else {
+                                        Toastr.error(res.msg);
+                                    }
+                                }
+                            });
+                            return false;
+                        });
+                    }
+                });
+            });
+        });
+    });
+</script>
+{/block}

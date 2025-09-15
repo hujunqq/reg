@@ -65,3 +65,18 @@
     </div>
 </div>
 {/block}
+{block name="js"}
+<script>
+    $(function () {
+        $('input[name=type]').on('change', function () {
+            var type = $(this).val();
+            $('[data-type]').addClass('hide');
+            $('[data-type="' + type + '"]').removeClass('hide');
+            $('#resetpwd-form').validator("setField", {
+                captcha: "required;length({$Think.config.captcha.length});digits;remote(" + $('input[name=type]:checked').data("check-url") + ", event=resetpwd, " + type + ":#" + type + ")"
+            });
+            $('.btn-captcha').data('url', $('input[name=type]:checked').data('send-url')).data('type', type);
+        });
+    });
+</script>
+{/block}

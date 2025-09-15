@@ -65,3 +65,29 @@ CREATE TABLE `fa_exam_application` (
   KEY `user_id` (`user_id`),
   KEY `exam_id` (`exam_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='报名申请表';
+
+-- Add menu for Exam Management
+INSERT INTO `fa_auth_rule` (`type`, `pid`, `name`, `title`, `icon`, `weigh`, `status`) VALUES ('menu', 0, 'exam', '考试管理', 'fa fa-book', 200, 'normal');
+SET @parent_id = LAST_INSERT_ID();
+INSERT INTO `fa_auth_rule` (`type`, `pid`, `name`, `title`, `icon`, `weigh`, `status`) VALUES ('menu', @parent_id, 'exam/exam', '考试列表', 'fa fa-list', 0, 'normal');
+INSERT INTO `fa_auth_rule` (`type`, `pid`, `name`, `title`, `icon`, `weigh`, `status`) VALUES ('menu', @parent_id, 'exam/level', '级别列表', 'fa fa-list-ol', 0, 'normal');
+INSERT INTO `fa_auth_rule` (`type`, `pid`, `name`, `title`, `icon`, `weigh`, `status`) VALUES ('menu', @parent_id, 'exam/application', '报名列表', 'fa fa-file-text-o', 0, 'normal');
+
+INSERT INTO `fa_auth_rule` (`type`, `pid`, `name`, `title`, `icon`, `weigh`, `status`) VALUES ('file', (SELECT id FROM fa_auth_rule WHERE name = 'exam/exam'), 'exam/exam/index', '查看', 'fa fa-circle-o', 0, 'normal');
+INSERT INTO `fa_auth_rule` (`type`, `pid`, `name`, `title`, `icon`, `weigh`, `status`) VALUES ('file', (SELECT id FROM fa_auth_rule WHERE name = 'exam/exam'), 'exam/exam/add', '添加', 'fa fa-circle-o', 0, 'normal');
+INSERT INTO `fa_auth_rule` (`type`, `pid`, `name`, `title`, `icon`, `weigh`, `status`) VALUES ('file', (SELECT id FROM fa_auth_rule WHERE name = 'exam/exam'), 'exam/exam/edit', '编辑', 'fa fa-circle-o', 0, 'normal');
+INSERT INTO `fa_auth_rule` (`type`, `pid`, `name`, `title`, `icon`, `weigh`, `status`) VALUES ('file', (SELECT id FROM fa_auth_rule WHERE name = 'exam/exam'), 'exam/exam/del', '删除', 'fa fa-circle-o', 0, 'normal');
+
+INSERT INTO `fa_auth_rule` (`type`, `pid`, `name`, `title`, `icon`, `weigh`, `status`) VALUES ('file', (SELECT id FROM fa_auth_rule WHERE name = 'exam/level'), 'exam/level/index', '查看', 'fa fa-circle-o', 0, 'normal');
+INSERT INTO `fa_auth_rule` (`type`, `pid`, `name`, `title`, `icon`, `weigh`, `status`) VALUES ('file', (SELECT id FROM fa_auth_rule WHERE name = 'exam/level'), 'exam/level/add', '添加', 'fa fa-circle-o', 0, 'normal');
+INSERT INTO `fa_auth_rule` (`type`, `pid`, `name`, `title`, `icon`, `weigh`, `status`) VALUES ('file', (SELECT id FROM fa_auth_rule WHERE name = 'exam/level'), 'exam/level/edit', '编辑', 'fa fa-circle-o', 0, 'normal');
+INSERT INTO `fa_auth_rule` (`type`, `pid`, `name`, `title`, `icon`, `weigh`, `status`) VALUES ('file', (SELECT id FROM fa_auth_rule WHERE name = 'exam/level'), 'exam/level/del', '删除', 'fa fa-circle-o', 0, 'normal');
+
+INSERT INTO `fa_auth_rule` (`type`, `pid`, `name`, `title`, `icon`, `weigh`, `status`) VALUES ('file', (SELECT id FROM fa_auth_rule WHERE name = 'exam/application'), 'exam/application/index', '查看', 'fa fa-circle-o', 0, 'normal');
+INSERT INTO `fa_auth_rule` (`type`, `pid`, `name`, `title`, `icon`, `weigh`, `status`) VALUES ('file', (SELECT id FROM fa_auth_rule WHERE name = 'exam/application'), 'exam/application/add', '添加', 'fa fa-circle-o', 0, 'normal');
+INSERT INTO `fa_auth_rule` (`type`, `pid`, `name`, `title`, `icon`, `weigh`, `status`) VALUES ('file', (SELECT id FROM fa_auth_rule WHERE name = 'exam/application'), 'exam/application/edit', '编辑', 'fa fa-circle-o', 0, 'normal');
+INSERT INTO `fa_auth_rule` (`type`, `pid`, `name`, `title`, `icon`, `weigh`, `status`) VALUES ('file', (SELECT id FROM fa_auth_rule WHERE name = 'exam/application'), 'exam/application/del', '删除', 'fa fa-circle-o', 0, 'normal');
+INSERT INTO `fa_auth_rule` (`type`, `pid`, `name`, `title`, `icon`, `weigh`, `status`) VALUES ('file', (SELECT id FROM fa_auth_rule WHERE name = 'exam/application'), 'exam/application/import', '导入', 'fa fa-circle-o', 0, 'normal');
+INSERT INTO `fa_auth_rule` (`type`, `pid`, `name`, `title`, `icon`, `weigh`, `status`) VALUES ('file', (SELECT id FROM fa_auth_rule WHERE name = 'exam/application'), 'exam/application/approve', '审核通过', 'fa fa-circle-o', 0, 'normal');
+INSERT INTO `fa_auth_rule` (`type`, `pid`, `name`, `title`, `icon`, `weigh`, `status`) VALUES ('file', (SELECT id FROM fa_auth_rule WHERE name = 'exam/application'), 'exam/application/reject', '审核拒绝', 'fa fa-circle-o', 0, 'normal');
+INSERT INTO `fa_auth_rule` (`type`, `pid`, `name`, `title`, `icon`, `weigh`, `status`) VALUES ('file', (SELECT id FROM fa_auth_rule WHERE name = 'exam/application'), 'exam/application/downloadtemplate', '下载模板', 'fa fa-circle-o', 0, 'normal');
