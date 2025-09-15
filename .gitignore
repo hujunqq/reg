@@ -1,10 +1,4 @@
-/nbproject/
-/thinkphp/
-/vendor/
 /runtime/*
-/addons/*
-/public/assets/libs/
-/public/assets/addons/*
 /public/uploads/*
 .DS_Store
 .idea
@@ -15,5 +9,4 @@ composer.lock
 .env
 .svn
 .vscode
-node_modules
 .user.ini
