@@ -22,7 +22,7 @@
                                 <tr>
                                     <td>{$exam.name}</td>
                                     <td>{$exam.year}</td>
-                                    <td>{$exam.exam_time|datetime}</td>
+                                    <td>{if $exam.exam_time}{$exam.exam_time|datetime}{/if}</td>
                                     <td>{$exam.exam_location}</td>
                                     <td>
                                         <a href="{:url('exam/detail', ['id' => $exam.id])}" class="btn btn-primary btn-xs">{:__('查看详情')}</a>
