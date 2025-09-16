@@ -21,4 +21,18 @@ class ExamApplication extends Model
 
     ];
 
+    public function user()
+    {
+        return $this->belongsTo('app\common\model\User', 'user_id', 'id', [], 'LEFT')->setEagerlyType(0);
+    }
+
+    public function exam()
+    {
+        return $this->belongsTo('app\common\model\Exam', 'exam_id', 'id', [], 'LEFT')->setEagerlyType(0);
+    }
+
+    public function examlevel()
+    {
+        return $this->belongsTo('app\common\model\ExamLevel', 'exam_level_id', 'id', [], 'LEFT')->setEagerlyType(0);
+    }
 }
