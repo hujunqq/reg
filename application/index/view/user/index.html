@@ -115,6 +115,7 @@
                 success: function (res) {
                     if (res.code === 1) {
                         var doc = new jspdf.jsPDF();
+                        doc.setFont('SimSun');
                         doc.text("准考证", 10, 10);
                         doc.text("姓名: " + res.data.user.nickname, 10, 20);
                         doc.text("考试名称: " + res.data.exam.name, 10, 30);

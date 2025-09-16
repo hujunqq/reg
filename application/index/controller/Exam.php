@@ -10,7 +10,6 @@ class Exam extends Frontend
 
     protected $noNeedLogin = '';
     protected $noNeedRight = '*';
-    protected $layout = '';
 
     public function index()
     {
@@ -55,7 +54,16 @@ class Exam extends Frontend
 
         $application = \app\common\model\ExamApplication::where('user_id', $user->id)->where('exam_id', $exam->id)->find();
         if ($application) {
-            $this->error(__('您已经报名过此考试'));
+            if ($application->status == 'rejected' && $exam->allow_reapply_on_fail) {
+                // 重新提交
+                $application->status = 'pending';
+                $application->apply_time = date('Y-m-d H:i:s');
+                $application->exam_level_id = $level_id; // 更新级别
+                $application->save();
+                $this->success(__('重新提交成功'));
+            } else {
+                $this->error(__('您已经报名过此考试'));
+            }
         }
 
         $data = [

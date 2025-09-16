@@ -38,7 +38,7 @@
                                 <div class="input-group">
                                     <input type="text" name="captcha" class="form-control" data-rule="required;length({$Think.config.captcha.length});digits;remote({:url('api/validate/check_ems_correct')}, event=resetpwd, email:#email)"/>
                                     <span class="input-group-btn" style="padding:0;border:none;">
-                                        <a href="javascript:;" class="btn btn-primary btn-captcha" data-url="{:url('api/ems/send')}" data-type="email" data-event="resetpwd">{:__('Send verification code')}</a>
+                                        <a href="javascript:;" class="btn btn-primary btn-captcha">{:__('Send verification code')}</a>
                                     </span>
                                 </div>
                                 <span class="msg-box"></span>
@@ -66,16 +66,89 @@
 </div>
 {/block}
 {block name="js"}
+<script type="text/html" id="graphicalcaptchatpl">
+    <form id="graphicalcaptcha-form" class="form-horizontal form-layer" method="POST" action="">
+        <div class="form-body">
+            <input type="hidden" name="action" value="checkgraphicalcaptcha" />
+            <div class="form-group">
+                <label for="c-captcha" class="control-label col-xs-12 col-sm-3">{:__('Captcha')}:</label>
+                <div class="col-xs-12 col-sm-8">
+                    <div class="input-group">
+                        <input type="text" name="captcha" id="captcha-input" class="form-control" data-rule="required;length(4)" />
+                        <span class="input-group-addon" style="padding:0;border:none;">
+                            <img src="{:captcha_src()}" width="100" height="30" onclick="this.src = '{:captcha_src()}?r=' + Math.random();"/>
+                        </span>
+                    </div>
+                    <span class="msg-box"></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-footer">
+            <div class="form-group" style="margin-bottom:0;">
+                <div class="col-xs-12 col-sm-8 col-sm-offset-3">
+                    <button type="submit" class="btn btn-md btn-primary">{:__('Submit')}</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</script>
 <script>
-    $(function () {
-        $('input[name=type]').on('change', function () {
-            var type = $(this).val();
-            $('[data-type]').addClass('hide');
-            $('[data-type="' + type + '"]').removeClass('hide');
-            $('#resetpwd-form').validator("setField", {
-                captcha: "required;length({$Think.config.captcha.length});digits;remote(" + $('input[name=type]:checked').data("check-url") + ", event=resetpwd, " + type + ":#" + type + ")"
+    require(['jquery', 'bootstrap', 'fast', 'form', 'layer', 'toastr', 'template'], function ($, undefined, Fast, Form, Layer, Toastr, Template) {
+        $(function () {
+            $('input[name=type]').on('change', function () {
+                var type = $(this).val();
+                $('[data-type]').addClass('hide');
+                $('[data-type="' + type + '"]').removeClass('hide');
+                $('#resetpwd-form').validator("setField", {
+                    captcha: "required;length({$Think.config.captcha.length});digits;remote(" + $('input[name=type]:checked').data("check-url") + ", event=resetpwd, " + type + ":#" + type + ")"
+                });
             });
-            $('.btn-captcha').data('url', $('input[name=type]:checked').data('send-url')).data('type', type);
+
+            $(document).on('click', '.btn-captcha', function () {
+                var type = $('input[name=type]:checked').val();
+                var mobile = $('#mobile').val();
+                if (type == 'mobile' && !mobile) {
+                    Toastr.error(__('Please enter mobile number'));
+                    return;
+                }
+                var email = $('#email').val();
+                if (type == 'email' && !email) {
+                    Toastr.error(__('Please enter email'));
+                    return;
+                }
+                Layer.open({
+                    type: 1,
+                    title: __('Please enter the graphical captcha'),
+                    area: ['400px', '250px'],
+                    content: Template('graphicalcaptchatpl', {}),
+                    success: function (layero, index) {
+                        var form = layero.find('form');
+                        Form.api.bindevent(form, function (data, ret) {
+                            // This is the success callback of the form submission
+                            Layer.close(index);
+                            // Now send the SMS or Email
+                            var captcha = layero.find('#captcha-input').val();
+                            var url = $('input[name=type]:checked').data('send-url');
+                            var data = {event: 'resetpwd', captcha: captcha};
+                            data[type] = $('#' + type).val();
+
+                            $.ajax({
+                                url: url,
+                                data: data,
+                                dataType: 'json',
+                                success: function (res) {
+                                    if (res.code === 1) {
+                                        Toastr.success(res.msg);
+                                    } else {
+                                        Toastr.error(res.msg);
+                                    }
+                                }
+                            });
+                            return false;
+                        });
+                    }
+                });
+            });
         });
     });
 </script>

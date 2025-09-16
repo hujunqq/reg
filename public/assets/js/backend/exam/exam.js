@@ -36,22 +36,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'allow_download_certificate', title: __('Allow_download_certificate'), searchList: {"1":__('Yes'),"0":__('No')}, formatter: Table.api.formatter.status},
                         {field: 'createtime', title: __('Createtime'), operate:'RANGE', addclass:'datetimerange', formatter: Table.api.formatter.datetime},
                         {field: 'updatetime', title: __('Updatetime'), operate:'RANGE', addclass:'datetimerange', formatter: Table.api.formatter.datetime},
-                        {
-                            field: 'operate',
-                            title: __('Operate'),
-                            table: table,
-                            events: Table.api.events.operate,
-                            buttons: [
-                                {
-                                    name: 'downloadtemplate',
-                                    text: __('下载模板'),
-                                    icon: 'fa fa-download',
-                                    classname: 'btn btn-xs btn-info btn-dialog',
-                                    url: 'exam/application/downloadtemplate'
-                                }
-                            ],
-                            formatter: Table.api.formatter.operate
-                        }
+                        {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
                     ]
                 ]
             });

@@ -78,6 +78,17 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             // 为表格绑定事件
             Table.api.bindevent(table);
 
+            table.on('load-success.bs.table', function (e, data) {
+                var options = table.bootstrapTable('getOptions');
+                var queryParams = options.queryParams(options);
+                var filter = queryParams.filter ? JSON.parse(queryParams.filter) : {};
+                if (filter.exam_id) {
+                    $('#btn-download-template').attr('href', 'exam/application/downloadtemplate/ids/' + filter.exam_id).show();
+                } else {
+                    $('#btn-download-template').hide();
+                }
+            });
+
             // 绑定事件
             $(document).on("click", ".btn-import", function () {
                 var url = $(this).data("url");
